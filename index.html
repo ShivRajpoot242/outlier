@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Digital Exorcist — Destroy digital phantoms and cleanse your system. A retro arcade shooter that gamifies digital chores.">
+  <title>Digital Exorcist — Phantom Slayer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>">
+</head>
+<body>
+  <div class="scanlines"></div>
+  <div id="app">
+    <!-- TITLE SCREEN -->
+    <div id="title-screen" class="screen active">
+      <div class="title-bg-effects">
+        <div class="ghost-float ghost-1">👻</div>
+        <div class="ghost-float ghost-2">👾</div>
+        <div class="ghost-float ghost-3">💀</div>
+        <div class="ghost-float ghost-4">📧</div>
+        <div class="ghost-float ghost-5">🗑️</div>
+      </div>
+      <div class="title-content">
+        <div class="title-glitch" data-text="DIGITAL">DIGITAL</div>
+        <div class="title-glitch title-main" data-text="EXORCIST">EXORCIST</div>
+        <div class="title-subtitle">— PHANTOM SLAYER —</div>
+        <div class="title-tagline">Destroy your digital clutter. One phantom at a time.</div>
+        <div class="title-actions">
+          <button id="btn-start-game" class="btn-arcade btn-primary"><span class="btn-icon">▶</span> START MISSION</button>
+          <button id="btn-how-to-play" class="btn-arcade btn-secondary"><span class="btn-icon">?</span> HOW TO PLAY</button>
+          <button id="btn-config" class="btn-arcade btn-tertiary"><span class="btn-icon">⚙</span> CONFIGURE TARGETS</button>
+        </div>
+        <div class="title-controls-hint">
+          <span><kbd>←</kbd> <kbd>→</kbd> Move</span>
+          <span><kbd>SPACE</kbd> Fire</span>
+          <span><kbd>P</kbd> Pause</span>
+        </div>
+      </div>
+    </div>
+    <!-- HOW TO PLAY SCREEN -->
+    <div id="howto-screen" class="screen">
+      <div class="howto-content">
+        <h1 class="section-title">⚔️ MISSION BRIEFING</h1>
+        <div class="howto-grid">
+          <div class="howto-card"><div class="howto-icon">📧</div><h3>SPAM PHANTOMS</h3><p>Red spirits are unread marketing & spam emails. Destroy them to delete or archive them.</p><div class="howto-points">+10 pts</div></div>
+          <div class="howto-card"><div class="howto-icon">📁</div><h3>FILE WRAITHS</h3><p>Blue apparitions are temp files and cache artifacts cluttering your drive.</p><div class="howto-points">+25 pts</div></div>
+          <div class="howto-card"><div class="howto-icon">⚠️</div><h3>LINT SPECTERS</h3><p>Yellow entities are lint warnings and code smells in your codebase.</p><div class="howto-points">+15 pts</div></div>
+          <div class="howto-card"><div class="howto-icon">💀</div><h3>BOSS MONSTERS</h3><p>Massive phantoms every 1000pts. Large attachments >50MB. Defeat to purge.</p><div class="howto-points">+500 pts</div></div>
+        </div>
+        <div class="howto-combos">
+          <h3>🔥 COMBO SYSTEM</h3>
+          <p>Chain kills without missing to build combos. Higher combos batch chores into single API calls!</p>
+          <div class="combo-tiers">
+            <span class="combo-tier tier-1">x2 — Double Batch</span>
+            <span class="combo-tier tier-2">x5 — Mega Purge</span>
+            <span class="combo-tier tier-3">x10 — EXORCISM MODE</span>
+          </div>
+        </div>
+        <button id="btn-back-howto" class="btn-arcade btn-secondary">← BACK</button>
+      </div>
+    </div>
+    <!-- CONFIG SCREEN -->
+    <div id="config-screen" class="screen">
+      <div class="config-content">
+        <h1 class="section-title">⚙️ TARGET CONFIGURATION</h1>
+        <div class="config-panels">
+          <div class="config-panel">
+            <div class="config-panel-header"><span class="config-icon">📧</span><h3>EMAIL TARGETS</h3>
+              <label class="toggle-switch"><input type="checkbox" id="toggle-email" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="config-panel-body">
+              <div class="config-field">
+                <label>Action on Defeat</label>
+                <select id="config-email-action">
+                  <option value="trash" selected>🗑️ Delete Spam (Move to Trash)</option>
+                  <option value="permanent">💥 Permanent Purge</option>
+                  <option value="archive">📦 Safe Archive (Mark Read)</option>
+                </select>
+              </div>
+              <div class="config-field"><label>Gmail Account</label><input type="email" placeholder="you@gmail.com" id="config-email"></div>
+              <div class="config-field"><label>Target Labels</label><div class="tag-group"><span class="config-tag active">Spam</span><span class="config-tag active">Promotions</span><span class="config-tag active">Social</span><span class="config-tag">Updates</span></div></div>
+              <div class="config-status"><span class="status-dot"></span> <span id="status-badge-text">Simulation Mode</span></div>
+            </div>
+          </div>
+          <div class="config-panel">
+            <div class="config-panel-header"><span class="config-icon">📁</span><h3>FILE SYSTEM TARGETS</h3>
+              <label class="toggle-switch"><input type="checkbox" id="toggle-files" checked><span class="toggle-slider"></span></label>
+            </div>
+            <div class="config-panel-body">
+              <div class="config-field"><label>Scan Directories</label><div class="tag-group"><span class="config-tag active">~/Downloads</span><span class="config-tag active">node_modules/.cache</span><span class="config-tag">/tmp</span></div></div>
+              <div class="config-field"><label>File Age Threshold</label><select id="config-file-age"><option value="7">Older than 7 days</option><option value="30" selected>Older than 30 days</option><option value="90">Older than 90 days</option></select></div>
+            </div>
+          </div>
+          <div class="config-panel">
+            <div class="config-panel-header"><span class="config-icon">⚠️</span><h3>LINT TARGETS</h3>
+              <label class="toggle-switch"><input type="checkbox" id="toggle-lint"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="config-panel-body">
+              <div class="config-field"><label>Project Path</label><input type="text" placeholder="~/projects/my-app" id="config-lint-path"></div>
+              <div class="config-field"><label>Tools</label><div class="tag-group"><span class="config-tag active">ESLint</span><span class="config-tag">Prettier</span><span class="config-tag">Stylelint</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="config-actions">
+          <button id="btn-save-config" class="btn-arcade btn-primary">💾 SAVE CONFIG</button>
+          <button id="btn-back-config" class="btn-arcade btn-secondary">← BACK</button>
+        </div>
+      </div>
+    </div>
+    <!-- GAME SCREEN -->
+    <div id="game-screen" class="screen">
+      <div id="game-hud">
+        <div class="hud-left">
+          <div class="hud-item"><span class="hud-label">SCORE</span><span class="hud-value" id="hud-score">0</span></div>
+          <div class="hud-item"><span class="hud-label">COMBO</span><span class="hud-value" id="hud-combo">x1</span></div>
+        </div>
+        <div class="hud-center">
+          <div class="hud-item"><span class="hud-label">WAVE</span><span class="hud-value" id="hud-wave">1</span></div>
+        </div>
+        <div class="hud-right">
+          <div class="hud-item"><span class="hud-label">LIVES</span><span class="hud-value" id="hud-lives">♥♥♥</span></div>
+          <div class="hud-item"><span class="hud-label">SHIELD</span><div class="shield-bar"><div class="shield-fill" id="hud-shield"></div></div></div>
+        </div>
+      </div>
+      <canvas id="game-canvas"></canvas>
+      <div id="chore-feed">
+        <div class="feed-header"><span class="feed-icon">📡</span> LIVE CHORE FEED</div>
+        <div id="feed-entries"></div>
+      </div>
+      <div id="pause-overlay" class="overlay hidden">
+        <div class="overlay-content">
+          <h2>⏸ PAUSED</h2><p>The phantoms are waiting...</p>
+          <button id="btn-resume" class="btn-arcade btn-primary">▶ RESUME</button>
+          <button id="btn-quit" class="btn-arcade btn-secondary">✕ QUIT</button>
+        </div>
+      </div>
+      <div id="gameover-overlay" class="overlay hidden">
+        <div class="overlay-content gameover">
+          <h2 class="gameover-title">💀 SYSTEM CORRUPTED</h2>
+          <div class="gameover-stats">
+            <div class="stat-row"><span>Final Score</span><span id="go-score">0</span></div>
+            <div class="stat-row"><span>Phantoms Exorcised</span><span id="go-kills">0</span></div>
+            <div class="stat-row"><span>Max Combo</span><span id="go-combo">x1</span></div>
+            <div class="stat-row"><span>Chores Completed</span><span id="go-chores">0</span></div>
+            <div class="stat-row danger"><span>Spam Deleted</span><span id="go-spam">0</span></div>
+            <div class="stat-row"><span>Emails Archived</span><span id="go-emails">0</span></div>
+            <div class="stat-row"><span>Files Cleaned</span><span id="go-files">0</span></div>
+            <div class="stat-row"><span>Lint Fixes</span><span id="go-lints">0</span></div>
+            <div class="stat-row highlight"><span>Waves Survived</span><span id="go-waves">0</span></div>
+          </div>
+          <div class="gameover-actions">
+            <button id="btn-retry" class="btn-arcade btn-primary">🔄 RETRY</button>
+            <button id="btn-menu" class="btn-arcade btn-secondary">🏠 MENU</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="audio.js"></script>
+  <script src="orchestrator.js"></script>
+  <script src="game.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
